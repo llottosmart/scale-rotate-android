@@ -31,9 +31,10 @@
   var callback = {
     start: function () {
       div.innerHTML = 'start';
-      div.innerHTML += 'data.scale + '----' + data.rotation';
+      
       data.scale = css(node,'scale');
       data.rotation = css(node,'rotate')
+      div.innerHTML += 'data.scale + '----' + data.rotation';
     },
     move: function (data) {
       div.innerHTML += (ev.scale + '----' + ev.rotation) +'<br/>';
