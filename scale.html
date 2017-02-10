@@ -18,7 +18,7 @@
 
 </div>
 </body>
-<script type="text/javascript" src="js/transform.js"></script>
+<script type="text/javascript" src="js/new_transform.js"></script>
 <script type="text/javascript">
   document.addEventListener("touchstart",function(ev){
     ev.preventDefault();
@@ -31,13 +31,15 @@
   var callback = {
     start: function () {
       div.innerHTML = 'start';
-      data.scale = css(node,'scale');
-      data.rotation = css(node,'rotate')
+
+      data.scale = css(div,'scale');
+      data.rotation = parseInt(css(div,'rotate'));
+      div.innerHTML += data.scale + '<br/>';
     },
-    move: function (data) {
-      div.innerHTML += (data.scale + '----' + data.rotation) +'<br/>';
-      css(node,'scale',ev.scale * data.scale);
-      css(node,'rotate',ev.rotation + data.rotation)
+    move: function (ev) {
+      div.innerHTML += ev.scale * data.scale +'<br/>';
+      css(div,'scale',ev.scale * data.scale);
+      css(div,'rotate',ev.rotation + data.rotation)
     },
     end: function () {
       div.innerHTML += 'end'
@@ -90,7 +92,7 @@
         ev.rotation = rotation;
 
         if(callback && callback['move']){
-          callback['move']()
+          callback['move'](ev)
         }
       }
 
@@ -114,6 +116,7 @@
     var y = p1.clientY - p2.clientY;
     return Math.sqrt(x*x + y*y)
   }
+
   function getAngel(p1, p2) {
     var x = p2.clientX - p1.clientX;
     var y = p2.clientY - p1.clientY;
