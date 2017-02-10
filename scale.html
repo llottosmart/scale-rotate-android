@@ -31,8 +31,8 @@
     start: function () {
       div.innerHTML = 'start'
     },
-    move: function () {
-      div.innerHTML += 'move<br/>'
+    move: function (data) {
+      div.innerHTML += (data.scale + '----' + data.rotation +'<br/>')
     },
     end: function () {
       div.innerHTML += 'end'
@@ -49,13 +49,22 @@
     var data = {};
     var startD = 0;
     var nowD = 0;
+    var startA = 0;
+    var nowA = 0;
     node.addEventListener('touchstart',function (ev) {
       var touch = ev.touches;
       var touchLength = touch.length;
       if(touchLength >= 2){
         flag = true;
-//        startD = getD(touch[0],touch[1])
-//        data.scale = css(node,'scale')
+        
+        //用于计算变化的scale和旋转
+        startD = getD(touch[0],touch[1])
+        startA = getAngel(touch[0],touch[1])
+        
+        //获取上次停留的scale和旋转
+        data.scale = css(node,'scale')
+        data.rotation = css(node,'rotate')
+        
         if(callback && callback['start']){
           callback['start']()
         }
@@ -64,15 +73,25 @@
 
     })
     node.addEventListener('touchmove',function (ev) {
-      var touchLength = ev.touches.length;
+      var touch = ev.touches
       if(flag){
-//        nowD = getD(touch[0],touch[1])
-//        var scale = nowD/startD;
-//        ev.scale = scale;
-//        data.scale = scale
-//        css(node,'scale',ev.scale * data.scale)
+        //缩放
+        nowD = getD(touch[0],touch[1])
+        var scale = nowD/startD;
+        ev.scale = scale;
+        data.scale = scale;
+       
+        //旋转
+        nowA = getAngel(touch[0],touch[1])
+        var rotation = nowA - startA;
+        ev.rotation = rotation
+        data.rotation = rotation
+        
+        css(node,'scale',ev.scale * data.scale)
+        css(node,'rotate',ev.rotation * data.rotation)
+        
         if(callback && callback['move']){
-          callback['move']()
+          callback['move'](data)
         }
       }
 
@@ -85,8 +104,6 @@
           callback['end']()
         }
       }
-
-
     })
 
 }
@@ -97,7 +114,11 @@
     var y = p1.clientY - p2.clientY;
     return Math.sqrt(x*x + y*y)
   }
-
+  function getAngel(p1, p2) {
+    var x = p2.clientX - p1.clientX;
+    var y = p2.clientY - p1.clientY;
+    return Math.tan2(y, x)*180/Math.PI;
+  }
 
 
 
