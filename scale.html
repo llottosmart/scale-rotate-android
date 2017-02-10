@@ -23,23 +23,21 @@
 
   var div = document.getElementsByTagName('div')[0];
   //这三个事件只支持苹果
-  var data = {};
+  var data;
 
   div.addEventListener('gesturestart',function () {
-    
-    div.innerHtml = '2'
+    data.scale = parseInt(css(div,'scale'));
+    data.rotation = parseInt(css(div,'rotate'))
   });
   div.addEventListener('gesturechange',function (ev) {
     data.scale = ev.scale;
     data.rotation = ev.rotation;
-    
-    div.innerHtml += (data.scale + data.rotation + '<br/>')
+    css(div,'scale',ev.scale * data.scale);
+    css(div,'rotate',ev.rotation + data.rotation)
+
   });
   div.addEventListener('gestureend',function () {
 
   })
-
-
-
 </script>
 </html>
