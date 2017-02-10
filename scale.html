@@ -28,14 +28,14 @@
   div.addEventListener('gesturestart',function () {
     data.scale = parseInt(css(div,'scale'));
     data.rotation = parseInt(css(div,'rotate'))
-    div.innerHtml = data.scale + '--' +  data.rotation
+    div.innerHtml = '2'
   });
   div.addEventListener('gesturechange',function (ev) {
     data.scale = ev.scale;
     data.rotation = ev.rotation;
     css(div,'scale',ev.scale * data.scale);
     css(div,'rotate',ev.rotation + data.rotation)
-    div.innerHtml += (ev.scale * data.scale + "---"+ev.rotation + data.rotation + '<br/>')
+    div.innerHtml += '2<br/>'
   });
   div.addEventListener('gestureend',function () {
 
