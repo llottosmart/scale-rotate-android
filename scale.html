@@ -14,9 +14,9 @@
   </style>
 </head>
 <body>
-  <div>
+<div>
 
-  </div>
+</div>
 </body>
 <script type="text/javascript" src="js/transform.js"></script>
 <script type="text/javascript">
@@ -80,17 +80,15 @@
         nowD = getD(touch[0],touch[1]);
         var scale = nowD/startD;
         ev.scale = scale;
-        data.scale = scale;
-
+        
         //旋转
         nowA = getAngel(touch[0],touch[1])
-        var rotation = nowA - startA;
+        var rotation = startA - nowA;
         ev.rotation = rotation
-        data.rotation = rotation
-
+        
         css(node,'scale',ev.scale * data.scale)
         css(node,'rotate',ev.rotation + data.rotation)
-        var str = nowA + "---" + startA + '<br/>';
+        var str = (ev.rotation + data.rotation) + '<br/>';
         div.innerHTML += str;
 
 //        if(callback && callback['move']){
@@ -110,7 +108,7 @@
       flag = false;
     })
 
-}
+  }
 
 
   function getD(p1, p2) {
