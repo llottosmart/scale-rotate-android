@@ -25,7 +25,7 @@
     this.innerHTML += 'gesturestart'
   })
   div.addEventListener('gesturechange',function (ev) {
-    this.innerHTML += ev.scale
+    this.innerHTML += (ev.scale + '<br/>')
   })
   div.addEventListener('gestureend',function (ev) {
     this.innerHTML += 'gestureend'
