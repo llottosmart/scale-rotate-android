@@ -23,7 +23,7 @@
 					case 'skew':
 					case 'skewX':
 					case 'skewY':
-					case 'ratate':
+					case 'rotate':
 
 			      			reschildt +=item+"("+node.transform[item]+"deg) ";
 						break;
