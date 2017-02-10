@@ -23,11 +23,12 @@
 
   var div = document.getElementsByTagName('div')[0];
   //这三个事件只支持苹果
-  var data;
+  var data = {};
 
   div.addEventListener('gesturestart',function () {
     data.scale = parseInt(css(div,'scale'));
     data.rotation = parseInt(css(div,'rotate'))
+    div.innerHtml = data.scale + '--' +  data.rotation
   });
   div.addEventListener('gesturechange',function (ev) {
     data.scale = ev.scale;
