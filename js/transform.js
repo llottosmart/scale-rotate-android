@@ -15,9 +15,9 @@
 		
 		if(arguments.length > 2){
 			//写
-			var reschildt = '';
+			
 		        node.transform[name] = value;
-
+			var reschildt = '';
 		        for (var item in node.transform) {
 				switch(item){
 					case 'skew':
