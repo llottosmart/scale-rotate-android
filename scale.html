@@ -32,10 +32,13 @@
     div.innerHTML+=data.rotation;
   });
   div.addEventListener('gesturechange',function (ev) {
-   
-			div.innerHTML=ev.scale+"<br/>";
-			div.innerHTML+=ev.rotation;
-	});
+    data.scale = ev.scale;
+    data.rotation = ev.rotation;
+    css(div,'scale',ev.scale * data.scale);
+    css(div,'rotate',ev.rotation + data.rotation)
+	  
+	  
+ });
   div.addEventListener('gestureend',function () {
 
   })
