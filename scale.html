@@ -36,7 +36,8 @@
     data.rotation = ev.rotation;
     css(div,'scale',ev.scale * data.scale);
     css(div,'rotate',ev.rotation + data.rotation)
-	  
+    div.innerHTML= data.scale
+    div.innerHTML+=data.rotation;
 	  
  });
   div.addEventListener('gestureend',function () {
