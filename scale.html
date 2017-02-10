@@ -121,7 +121,7 @@
   function getAngel(p1, p2) {
     var x = p2.clientX - p1.clientX;
     var y = p2.clientY - p1.clientY;
-    return Math.tan2(y, x)*180/Math.PI;
+    return Math.atan2(y, x)*180/Math.PI;
   }
 
 
