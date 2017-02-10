@@ -32,14 +32,14 @@
     start: function () {
       div.innerHTML = 'start';
       
-      data.scale = css(node,'scale');
-      data.rotation = css(node,'rotate')
+      data.scale = css(div,'scale');
+      data.rotation = css(div,'rotate')
       div.innerHTML += (data.scale + '----' + data.rotation);
     },
-    move: function (data) {
+    move: function (ev) {
       div.innerHTML += (ev.scale + '----' + ev.rotation) +'<br/>';
-      css(node,'scale',ev.scale * data.scale);
-      css(node,'rotate',ev.rotation + data.rotation)
+      css(div,'scale',ev.scale * data.scale);
+      css(div,'rotate',ev.rotation + data.rotation)
     },
     end: function () {
       div.innerHTML += 'end'
