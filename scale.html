@@ -56,15 +56,15 @@
       var touchLength = touch.length;
       if(touchLength >= 2){
         flag = true;
-        
+
         //用于计算变化的scale和旋转
         startD = getD(touch[0],touch[1])
-        startA = getAngel(touch[0],touch[1])
-        
+//        startA = getAngel(touch[0],touch[1])
+
         //获取上次停留的scale和旋转
         data.scale = css(node,'scale')
-        data.rotation = css(node,'rotate')
-        
+//        data.rotation = css(node,'rotate')
+
         if(callback && callback['start']){
           callback['start']()
         }
@@ -73,37 +73,41 @@
 
     })
     node.addEventListener('touchmove',function (ev) {
-      var touch = ev.touches
-      if(flag){
+      var touch = ev.touches;
+      var touchLength = touch.length;
+      if(flag && (touchLength >= 2)){
         //缩放
-        nowD = getD(touch[0],touch[1])
+        nowD = getD(touch[0],touch[1]);
         var scale = nowD/startD;
         ev.scale = scale;
         data.scale = scale;
-       
+
         //旋转
-        nowA = getAngel(touch[0],touch[1])
-        var rotation = nowA - startA;
-        ev.rotation = rotation
-        data.rotation = rotation
-        
-        css(node,'scale',ev.scale * data.scale)
-        css(node,'rotate',ev.rotation * data.rotation)
-        
-        if(callback && callback['move']){
-          callback['move'](data)
-        }
+//        nowA = getAngel(touch[0],touch[1])
+//        var rotation = nowA - startA;
+//        ev.rotation = rotation
+//        data.rotation = rotation
+
+//        css(node,'scale',ev.scale * data.scale)
+//        css(node,'rotate',ev.rotation * data.rotation)
+        var str = scale * data.scale + '<br/>';
+        div.innerHTML += str;
+
+//        if(callback && callback['move']){
+//          callback['move'](data)
+//        }
       }
 
 
     })
     node.addEventListener('touchend',function (ev) {
       var touchLength = ev.touches.length;
-      if(flag){
+      if(flag && (touchLength >= 2)){
         if(callback && callback['end']){
           callback['end']()
         }
       }
+      flag = false;
     })
 
 }
