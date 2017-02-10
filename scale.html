@@ -34,7 +34,7 @@
     data.rotation = ev.rotation;
     css(div,'scale',ev.scale * data.scale);
     css(div,'rotate',ev.rotation + data.rotation)
-
+    div.innerHtml += (ev.scale * data.scale + "---"+ev.rotation + data.rotation + '<br/>')
   });
   div.addEventListener('gestureend',function () {
 
