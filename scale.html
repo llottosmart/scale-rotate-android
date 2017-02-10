@@ -31,7 +31,7 @@
       div.innerHTML = 'start';
       
       data.scale = css(div,'scale');
-      data.rotation = parseInt(css(div,'rotate'));
+      data.rotation = css(div,'rotate');
       div.innerHTML += data.scale + '<br/>';
     },
     move: function (ev) {
