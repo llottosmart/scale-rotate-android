@@ -14,31 +14,112 @@
   </style>
 </head>
 <body>
-  <div>
+<div>
 
-  </div>
+</div>
 </body>
 <script type="text/javascript" src="js/transform.js"></script>
 <script type="text/javascript">
-
+  document.addEventListener("touchstart",function(ev){
+    ev.preventDefault();
+  });
   var div = document.getElementsByTagName('div')[0];
-  //这三个事件只支持苹果
-  var data;
 
-  div.addEventListener('gesturestart',function () {
-    data.scale = parseInt(css(div,'scale'));
-    data.rotation = parseInt(css(div,'rotate'))
-  });
-  div.addEventListener('gesturechange',function (ev) {
-    data.scale = ev.scale;
-    data.rotation = ev.rotation;
-    css(div,'scale',ev.scale * data.scale);
-    css(div,'rotate',ev.rotation + data.rotation)
 
-  });
-  div.addEventListener('gestureend',function () {
+  //定义模拟事件
+  var data = {};
+  var callback = {
+    start: function () {
+      div.innerHTML = 'start';
+      data.scale = css(node,'scale');
+      data.rotation = css(node,'rotate')
+    },
+    move: function (data) {
+      div.innerHTML += (data.scale + '----' + data.rotation) +'<br/>';
+      css(node,'scale',ev.scale * data.scale);
+      css(node,'rotate',ev.rotation + data.rotation)
+    },
+    end: function () {
+      div.innerHTML += 'end'
+    }
+  };
 
-  })
+
+
+
+  gestrue(div,callback);
+
+  function gestrue(node, callback) {
+    var flag = false;
+    var startD = 0;
+    var nowD = 0;
+    var startA = 0;
+    var nowA = 0;
+    var scale = 1;
+    var rotation = 0;
+    node.addEventListener('touchstart',function (ev) {
+      var touch = ev.touches;
+      var touchLength = touch.length;
+      if(touchLength >= 2){
+
+        flag = true;
+
+        //用于计算变化的scale和旋转
+        startD = getD(touch[0],touch[1]);
+        startA = getAngel(touch[0],touch[1]);
+
+        if(callback && callback['start']){
+          callback['start']()
+        }
+      }
+
+
+    });
+    node.addEventListener('touchmove',function (ev) {
+      var touch = ev.touches;
+      var touchLength = touch.length;
+      if(flag && (touchLength >= 2)){
+        //缩放
+        nowD = getD(touch[0],touch[1]);
+        scale = nowD/startD;
+        ev.scale = scale;
+
+        //旋转
+        nowA = getAngel(touch[0],touch[1]);
+        rotation = startA - nowA;
+        ev.rotation = rotation;
+
+        if(callback && callback['move']){
+          callback['move']()
+        }
+      }
+
+
+    });
+    node.addEventListener('touchend',function (ev) {
+      var touchLength = ev.touches.length;
+      if(flag && (touchLength >= 2)){
+        if(callback && callback['end']){
+          callback['end']()
+        }
+      }
+      flag = false;
+    })
+
+  }
+
+
+  function getD(p1, p2) {
+    var x = p1.clientX - p2.clientX;
+    var y = p1.clientY - p2.clientY;
+    return Math.sqrt(x*x + y*y)
+  }
+  function getAngel(p1, p2) {
+    var x = p2.clientX - p1.clientX;
+    var y = p2.clientY - p1.clientY;
+    return Math.atan2(y, x)*180/Math.PI;
+  }
+
 
 
 
