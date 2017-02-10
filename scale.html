@@ -89,7 +89,7 @@
         data.rotation = rotation
 
         css(node,'scale',ev.scale * data.scale)
-        css(node,'rotate',ev.rotation * data.rotation)
+        css(node,'rotate',ev.rotation + data.rotation)
         var str = nowA + "---" + startA + '<br/>';
         div.innerHTML += str;
 
