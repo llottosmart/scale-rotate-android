@@ -30,9 +30,13 @@
   var callback = {
     start: function () {
       div.innerHTML = 'start'
+      data.scale = css(node,'scale')
+      data.rotation = css(node,'rotate')
     },
     move: function (data) {
-      div.innerHTML += (data.scale + '----' + data.rotation +'<br/>')
+      div.innerHTML += (data.scale + '----' + data.rotation) +'<br/>';
+      css(node,'scale',ev.scale * data.scale)
+      css(node,'rotate',ev.rotation + data.rotation)
     },
     end: function () {
       div.innerHTML += 'end'
@@ -51,19 +55,18 @@
     var nowD = 0;
     var startA = 0;
     var nowA = 0;
+    var scale = 1;
+    var rotation = 0;
     node.addEventListener('touchstart',function (ev) {
       var touch = ev.touches;
       var touchLength = touch.length;
       if(touchLength >= 2){
+        
         flag = true;
 
         //用于计算变化的scale和旋转
         startD = getD(touch[0],touch[1])
         startA = getAngel(touch[0],touch[1])
-
-        //获取上次停留的scale和旋转
-        data.scale = css(node,'scale')
-        data.rotation = css(node,'rotate')
 
         if(callback && callback['start']){
           callback['start']()
@@ -78,22 +81,17 @@
       if(flag && (touchLength >= 2)){
         //缩放
         nowD = getD(touch[0],touch[1]);
-        var scale = nowD/startD;
+        scale = nowD/startD;
         ev.scale = scale;
-        
+
         //旋转
         nowA = getAngel(touch[0],touch[1])
-        var rotation = startA - nowA;
+        rotation = startA - nowA;
         ev.rotation = rotation
-        
-        css(node,'scale',ev.scale * data.scale)
-        css(node,'rotate',ev.rotation + data.rotation)
-        var str = (ev.rotation + data.rotation) + '<br/>';
-        div.innerHTML += str;
 
-//        if(callback && callback['move']){
-//          callback['move'](data)
-//        }
+        if(callback && callback['move']){
+          callback['move']()
+        }
       }
 
 
