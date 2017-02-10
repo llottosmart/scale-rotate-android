@@ -23,21 +23,21 @@
 
   var div = document.getElementsByTagName('div')[0];
   //这三个事件只支持苹果
-  var data;
+  var data = {};
 
   div.addEventListener('gesturestart',function () {
     data.scale = parseInt(css(div,'scale'));
-    data.rotation = parseInt(css(div,'rotate'))
-    div.innerHTML= data.scale
-    div.innerHTML+=data.rotation;
+    data.rotation = parseInt(css(div,'rotate'));
+    div.innerHTML = data.scale;
+    div.innerHTML += data.rotation;
   });
   div.addEventListener('gesturechange',function (ev) {
     data.scale = ev.scale;
     data.rotation = ev.rotation;
     css(div,'scale',ev.scale * data.scale);
     css(div,'rotate',ev.rotation + data.rotation)
-    div.innerHTML+=(ev.scale + ev.rotation + '<br/>');
-	  
+    div.innerHTML = (ev.scale + ev.rotation + '<br/>');
+    div.innerHTML += (ev.scale + ev.rotation + '<br/>');
  });
   div.addEventListener('gestureend',function () {
 
