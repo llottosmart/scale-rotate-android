@@ -33,11 +33,12 @@
       div.innerHTML = 'start';
       
       data.scale = css(div,'scale');
-      data.rotation = css(div,'rotate')
+      data.rotation = parseInt(css(div,'rotate'));
       div.innerHTML += data.scale + '<br/>';
     },
     move: function (ev) {
-      div.innerHTML += ev.scale * data.scale +'<br/>';
+//       div.innerHTML += ev.scale * data.scale +'<br/>';
+      div.innerHTML += (ev.rotation + data.rotation) +'<br/>';
       css(div,'scale',ev.scale * data.scale);
       css(div,'rotate',ev.rotation + data.rotation)
     },
