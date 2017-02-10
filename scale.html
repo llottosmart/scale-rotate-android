@@ -21,81 +21,11 @@
 <script type="text/javascript">
 
   var div = document.getElementsByTagName('div')[0];
-//  gesturestart 两根或两根手指以上
-  div.addEventListener('gesturestart',function () {
-    this.innerHTML = 'gesturestart'
-  });
-//  gesturestart 两根或两根手指以上，当这些手指中的任意一个或多个发生移动时触发
-  div.addEventListener('gesturechange',function () {
-    this.innerHTML = 'gesturestart'
-  });
-//  gesturestart 一个或没有手指留在屏幕上触发
-  div.addEventListener('gestureend',function () {
-    this.innerHTML = 'gesturestart'
-  });
 
-//  //以上三个事件只有ios支持，需模拟安卓下的这三个事件
-//  var flag = false;
-//  var start = {};
-//  gesture(div)
-//  function gesture(node,callback) {
-//
-//    node.addEventListener('touchstart',function (ev) {
-//      var thumbLength = ev.touches.length
-//      console.log('start')
-//      if(thumbLength >= 2){
-//        flag = true; //说明是两根手指或以上
-//        //获取初始两根手指的距离
-//        start.dis = getDistance()
-//
-//      }
-//
-//
-//
-//    })
-//
-//    node.addEventListener('touchmove',function (ev) {
-//      if(flag){
-//        //获取两根手指之间距离的变化，即scale
-//        var scale = getDistance()/start.dis;
-//        console.log(scale)
-//        node.innerHTML = scale;
-//      }
-//    })
-//
-//    node.addEventListener('touchend',function (ev) {
-//      if(flag){
-//
-//      }
-//    })
-//
-//
-//
-//
-//  }
-//
-//  function getDistance(p1,p2) {
-//    //两个点之间的距离，利用勾股定理
-//    var x = p1.clientX - p2.clientX;
-//    var y = p1.clientY - p2.clientY;
-//    return Math.sqrt(x*x + y*y);
-//  }
-//
-//
-//
+  div.addEventListener('gesturestart',function (ev) {
 
-
-
-
-
-
-
-
-
-
-
-
-
+    console.log(ev.touches.length)
+  })
 
 
 
