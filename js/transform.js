@@ -15,28 +15,34 @@
 		
 		if(arguments.length > 2){
 			//写
-			switch(name){
+			var reschildt = '';
+		        node.transform[name] = value;
+
+		        for (var item in node.transform) {
+				switch(item){
 					case 'skew':
 					case 'skewX':
 					case 'skewY':
 					case 'ratate':
-					case 'ratateX':
-					case 'ratateY':
-					value += 'deg';
-					break;
+
+			      			reschildt +=item+"("+node.transform[item]+"deg) ";
+						break;
 					case 'translate':
 					case 'translateX':
 					case 'translateY':
 					case 'translateZ':
-					value += 'px'
-					break;
+			      			reschildt +=item+"("+node.transform[item]+"px) ";
+						break;
+				       case "scale":
+				       case "scaleX":
+				       case "scaleY":
+					       reschildt +=item+"("+node.transform[item]+") ";
+					       break;
 				}
-			node.transform[name] = value;
-			var result = '';
-			for (var item in node.transform) {
-				result += item + '('+ node.transform[item]+') '
-			}
-			node.style.transform = node.style.webkitTransform = result;
+      			}
+
+			node.style.transform = node.style.webkitTransform = reschildt;
+			
 			
 		}else{
 			//读 scale skew ratate translate
