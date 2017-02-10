@@ -22,35 +22,35 @@
 <script type="text/javascript">
   document.addEventListener("touchstart",function(ev){
     ev.preventDefault();
-  })
+  });
   var div = document.getElementsByTagName('div')[0];
 
 
   //定义模拟事件
+  var data = {};
   var callback = {
     start: function () {
-      div.innerHTML = 'start'
-      data.scale = css(node,'scale')
+      div.innerHTML = 'start';
+      data.scale = css(node,'scale');
       data.rotation = css(node,'rotate')
     },
     move: function (data) {
       div.innerHTML += (data.scale + '----' + data.rotation) +'<br/>';
-      css(node,'scale',ev.scale * data.scale)
+      css(node,'scale',ev.scale * data.scale);
       css(node,'rotate',ev.rotation + data.rotation)
     },
     end: function () {
       div.innerHTML += 'end'
     }
-  }
+  };
 
 
 
 
-  gestrue(div,callback)
+  gestrue(div,callback);
 
   function gestrue(node, callback) {
     var flag = false;
-    var data = {};
     var startD = 0;
     var nowD = 0;
     var startA = 0;
@@ -61,12 +61,12 @@
       var touch = ev.touches;
       var touchLength = touch.length;
       if(touchLength >= 2){
-        
+
         flag = true;
 
         //用于计算变化的scale和旋转
-        startD = getD(touch[0],touch[1])
-        startA = getAngel(touch[0],touch[1])
+        startD = getD(touch[0],touch[1]);
+        startA = getAngel(touch[0],touch[1]);
 
         if(callback && callback['start']){
           callback['start']()
@@ -74,7 +74,7 @@
       }
 
 
-    })
+    });
     node.addEventListener('touchmove',function (ev) {
       var touch = ev.touches;
       var touchLength = touch.length;
@@ -85,9 +85,9 @@
         ev.scale = scale;
 
         //旋转
-        nowA = getAngel(touch[0],touch[1])
+        nowA = getAngel(touch[0],touch[1]);
         rotation = startA - nowA;
-        ev.rotation = rotation
+        ev.rotation = rotation;
 
         if(callback && callback['move']){
           callback['move']()
@@ -95,7 +95,7 @@
       }
 
 
-    })
+    });
     node.addEventListener('touchend',function (ev) {
       var touchLength = ev.touches.length;
       if(flag && (touchLength >= 2)){
@@ -114,6 +114,7 @@
     var y = p1.clientY - p2.clientY;
     return Math.sqrt(x*x + y*y)
   }
+  
   function getAngel(p1, p2) {
     var x = p2.clientX - p1.clientX;
     var y = p2.clientY - p1.clientY;
