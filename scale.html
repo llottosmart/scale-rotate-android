@@ -20,27 +20,87 @@
 </body>
 <script type="text/javascript" src="js/transform.js"></script>
 <script type="text/javascript">
-
-  var div = document.getElementsByTagName('div')[0];
-  //这三个事件只支持苹果
-  var data = {};
-
-  div.addEventListener('gesturestart',function () {
-    data.scale = parseInt(css(div,'scale'));
-    data.rotation = parseInt(css(div,'rotate'));
-    div.innerHTML = data.scale;
-    div.innerHTML += data.rotation;
-  });
-  div.addEventListener('gesturechange',function (ev) {
-    data.scale = ev.scale;
-    data.rotation = ev.rotation;
-    css(div,'scale',ev.scale * data.scale);
-    css(div,'rotate',ev.rotation + data.rotation)
-    div.innerHTML = (ev.scale + ev.rotation + '<br/>');
-    div.innerHTML += (ev.scale + ev.rotation + '<br/>');
- });
-  div.addEventListener('gestureend',function () {
-
+  document.addEventListener("touchstart",function(ev){
+    ev.preventDefault();
   })
+  var div = document.getElementsByTagName('div')[0];
+
+
+  //定义模拟事件
+  var callback = {
+    start: function () {
+      div.innerHTML = 'start'
+    },
+    move: function () {
+      div.innerHTML += 'move'
+    },
+    end: function () {
+      div.innerHTML += 'end'
+    }
+  }
+
+
+
+
+  gestrue(div,callback)
+
+  function gestrue(node, callback) {
+    var flag = false;
+    var data = {};
+    var startD = 0;
+    var nowD = 0;
+    node.addEventListener('touchstart',function (ev) {
+      var touch = ev.touches;
+      var touchLength = touch.length;
+      if(touchLength >= 2){
+        flag = true;
+//        startD = getD(touch[0],touch[1])
+//        data.scale = css(node,'scale')
+        if(callback && callback['start']){
+          callback['start']()
+        }
+      }
+
+
+    })
+    node.addEventListener('touchmove',function (ev) {
+      var touchLength = ev.touches.length;
+      if(flag){
+//        nowD = getD(touch[0],touch[1])
+//        var scale = nowD/startD;
+//        ev.scale = scale;
+//        data.scale = scale
+//        css(node,'scale',ev.scale * data.scale)
+        if(callback && callback['move']){
+          callback['move']()
+        }
+      }
+
+
+    })
+    node.addEventListener('touchend',function (ev) {
+      var touchLength = ev.touches.length;
+      if(flag){
+        if(callback && callback['end']){
+          callback['end']()
+        }
+      }
+
+
+    })
+
+}
+
+
+  function getD(p1, p2) {
+    var x = p1.clientX - p2.clientX;
+    var y = p1.clientY - p2.clientY;
+    return Math.sqrt(x*x + y*y)
+  }
+
+
+
+
+
 </script>
 </html>
