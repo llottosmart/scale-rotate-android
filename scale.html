@@ -22,8 +22,14 @@
 
   var div = document.getElementsByTagName('div')[0];
   div.addEventListener('gesturestart',function () {
-   this.innerHTML = 'gesturestart'
- })
+    this.innerHTML += 'gesturestart'
+  })
+  div.addEventListener('gesturechange',function (ev) {
+    this.innerHTML += ev.scale
+  })
+  div.addEventListener('gestureend',function (ev) {
+    this.innerHTML += 'gestureend'
+  })
 
 
 </script>
