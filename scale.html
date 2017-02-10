@@ -18,15 +18,27 @@
 
   </div>
 </body>
+<script type="text/javascript" src="js/transform.js"></script>
 <script type="text/javascript">
 
   var div = document.getElementsByTagName('div')[0];
+  //这三个事件只支持苹果
+  var data;
 
-  div.addEventListener('gesturestart',function (ev) {
+  div.addEventListener('gesturestart',function () {
+    data.scale = parseInt(css(div,'scale'));
+    data.rotation = parseInt(css(div,'rotate'))
+  });
+  div.addEventListener('gesturechange',function (ev) {
+    data.scale = ev.scale;
+    data.rotation = ev.rotation;
+    css(div,'scale',ev.scale * data.scale);
+    css(div,'rotate',ev.rotation + data.rotation)
 
-    console.log(ev.touches.length)
+  });
+  div.addEventListener('gestureend',function () {
+
   })
-
 
 
 
